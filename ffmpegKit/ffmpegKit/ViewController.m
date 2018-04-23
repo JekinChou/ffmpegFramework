@@ -13,6 +13,30 @@
 const int pixel_w = 375;//视频像素宽 需要按视频进行修改,不固定
 const int pixel_h = 667;//视频像素高
 const int bpp = 12;
+int screenw = pixel_w;
+int screenh = pixel_h;
+#define REFRESH_EVENT  (SDL_USEREVENT + 1 )
+#define BREAK_EVENT (SDL_USEREVENT + 2 )
+#define WINDOW_EVENY  (SDL_USEREVENT + 3 )
+int thread_exit = 0;//线程退出标注
+//发送时间用于不断循环刷纹理
+int refresh_video(void *opaque){
+    thread_exit = 0;
+    while (thread_exit == 0) {
+        SDL_Event event;
+        event.type = REFRESH_EVENT;
+        SDL_PushEvent(&event);
+        //放慢倍数,越大越慢(倍数 = num/10    40ms)
+        SDL_Delay(40);
+    }
+    //break
+    thread_exit = 0;
+    SDL_Event event;
+    event.type = BREAK_EVENT;
+    SDL_PushEvent(&event);
+    return 0;
+}
+
 @interface ViewController () {
     unsigned char buffer[pixel_w/pixel_h*bpp/8];
 }
@@ -50,31 +74,41 @@ const int bpp = 12;
     fp = fopen("xxx.yuv","rb+");
     //创建显示矩形(决定图形显示在widow的什么位置上(rect小于window大小的话,周围为黑边))
     SDL_Rect sdlRect;
+    //创建线程
+    SDL_Thread *refresh = SDL_CreateThread(refresh_video, NULL,NULL);
+    SDL_Event event;
     //读取数据
     while(1){//TEST
         //1点1点读取,当内容全部读完就不循环了
         //buffer 存储读取的数据
         //YUV:Y数据的量为宽*高  UV:宽*0.5 高*0.5
         //总数据为1+1/4+1/4 = 1.5
-        
-        if(fread(buffer, 1, pixel_w*pixel_h*bpp/8 , fp)!= pixel_w*pixel_h*bpp/8){
-            //loop
-            fseek(fp, 0, SEEK_SET);
-            fread(buffer, 1, pixel_w/pixel_h*bpp/8, fp);
+        if(!fp)return;
+        SDL_WaitEvent(&event);
+        if(event.type == REFRESH_EVENT){//刷新事件
+            if(fread(buffer, 1, pixel_w*pixel_h*bpp/8 , fp)!= pixel_w*pixel_h*bpp/8){
+                //loop
+                fseek(fp, 0, SEEK_SET);
+                fread(buffer, 1, pixel_w/pixel_h*bpp/8, fp);
+            }
+            //更新纹理用于显示
+            SDL_UpdateTexture(sdlTexture, NULL, buffer, pixel_w);
+            sdlRect.x = 0;
+            sdlRect.y = 0;
+            sdlRect.w = screenw;
+            sdlRect.h = screenh;
+            
+            SDL_RenderClear(render);
+            //读取所填信息,将视频确定显示位置
+            SDL_RenderCopy(render, sdlTexture, NULL, &sdlRect);
+            SDL_RenderPresent(render);
+        }else if (event.type == BREAK_EVENT){//断点事件 退出循环(退出播放)
+            break;
+        }else if(event.type == WINDOW_EVENY){//windows有个window变化的事件(在客户端没效果)
+            SDL_GetWindowSize(window, &screenw, &screenh);
+        }else if (event.type == SDL_QUIT){
+            thread_exit = 1;
         }
-        //更新纹理用于显示
-        SDL_UpdateTexture(sdlTexture, NULL, buffer, pixel_w);
-        sdlRect.x = 0;
-        sdlRect.y = 0;
-        sdlRect.w = pixel_w;
-        sdlRect.h = pixel_h;
-        
-        SDL_RenderClear(render);
-        //读取所填信息,将视频确定显示位置
-        SDL_RenderCopy(render, sdlTexture, NULL, &sdlRect);
-        SDL_RenderPresent(render);
-        //放慢倍数,越大越慢(倍数 = num/10)
-        SDL_Delay(40);
     }
     SDL_Quit();
 }
