@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #include "avformat.h"
+#import "SDL.h"
 @interface ViewController ()
 
 @end
@@ -18,6 +19,11 @@
     [super viewDidLoad];
     av_register_all();
     NSLog(@"配置成功");
+    if(SDL_Init(SDL_INIT_VIDEO)){
+        NSLog(@"加载SDL失败");
+    }else {
+        NSLog(@"加载SDL成功");
+    }
 }
 
 
