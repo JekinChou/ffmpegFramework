@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #include "avformat.h"
-#import "SDL.h"
+#include "SDL.h"
 @interface ViewController ()
 
 @end
@@ -18,9 +18,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     av_register_all();
-    NSLog(@"配置成功");
+    NSLog(@"配置成功");    
+    SDL_SetMainReady();//因为官网dll问题,在初始化之前需要调用此句代码
     if(SDL_Init(SDL_INIT_VIDEO)){
-        NSLog(@"加载SDL失败");
+        NSLog(@"加载SDL失败,%s",SDL_GetError());
     }else {
         NSLog(@"加载SDL成功");
     }
