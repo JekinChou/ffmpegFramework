@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18368A482099AD0000813B8E /* NetTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18368A472099AD0000813B8E /* NetTransferViewController.m */; };
 		18887CFC208D89470039F95B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18887CFB208D89470039F95B /* AppDelegate.m */; };
 		18887CFF208D89470039F95B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18887CFE208D89470039F95B /* ViewController.m */; };
 		18887D02208D89470039F95B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18887D00208D89470039F95B /* Main.storyboard */; };
@@ -33,9 +34,12 @@
 		1888804F208DBB610039F95B /* libSDL2_test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18888002208DBB610039F95B /* libSDL2_test.a */; };
 		18888051208DBDC60039F95B /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18888050208DBDC60039F95B /* GameController.framework */; };
 		18888053208DBF4F0039F95B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18888052208DBF4F0039F95B /* CoreMotion.framework */; };
+		1899338920916D0500DAC342 /* FFmpegInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1899338820916D0500DAC342 /* FFmpegInputViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18368A462099AD0000813B8E /* NetTransferViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetTransferViewController.h; sourceTree = "<group>"; };
+		18368A472099AD0000813B8E /* NetTransferViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetTransferViewController.m; sourceTree = "<group>"; };
 		18887CF7208D89460039F95B /* ffmpegKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ffmpegKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18887CFA208D89460039F95B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		18887CFB208D89470039F95B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -248,6 +252,8 @@
 		1888804C208DBB610039F95B /* SDL_opengles2_gl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDL_opengles2_gl2.h; sourceTree = "<group>"; };
 		18888050208DBDC60039F95B /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		18888052208DBF4F0039F95B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		1899338720916D0500DAC342 /* FFmpegInputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFmpegInputViewController.h; sourceTree = "<group>"; };
+		1899338820916D0500DAC342 /* FFmpegInputViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFmpegInputViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +312,10 @@
 				18887CFB208D89470039F95B /* AppDelegate.m */,
 				18887CFD208D89470039F95B /* ViewController.h */,
 				18887CFE208D89470039F95B /* ViewController.m */,
+				1899338720916D0500DAC342 /* FFmpegInputViewController.h */,
+				1899338820916D0500DAC342 /* FFmpegInputViewController.m */,
+				18368A462099AD0000813B8E /* NetTransferViewController.h */,
+				18368A472099AD0000813B8E /* NetTransferViewController.m */,
 				18887D00208D89470039F95B /* Main.storyboard */,
 				18887D03208D89480039F95B /* Assets.xcassets */,
 				18887D05208D89480039F95B /* LaunchScreen.storyboard */,
@@ -704,8 +714,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1899338920916D0500DAC342 /* FFmpegInputViewController.m in Sources */,
 				18887CFF208D89470039F95B /* ViewController.m in Sources */,
 				18887D97208D89B90039F95B /* empty.mm in Sources */,
+				18368A482099AD0000813B8E /* NetTransferViewController.m in Sources */,
 				18887D0A208D89480039F95B /* main.m in Sources */,
 				18887CFC208D89470039F95B /* AppDelegate.m in Sources */,
 			);

@@ -10,8 +10,8 @@
 #include "avformat.h"
 #include "SDL.h"
 #include "file.h"
-const int pixel_w = 375;//视频像素宽 需要按视频进行修改,不固定
-const int pixel_h = 667;//视频像素高
+const int pixel_w = 960;//视频像素宽 需要按视频进行修改,不固定
+const int pixel_h = 720;//视频像素高
 const int bpp = 12;
 int screenw = pixel_w;
 int screenh = pixel_h;
@@ -71,7 +71,10 @@ int refresh_video(void *opaque){
     SDL_Texture *sdlTexture = SDL_CreateTexture(render, pixformat, SDL_TEXTUREACCESS_STATIC, 375, 667);
     //选择文件路径
     FILE *fp = NULL;
-    fp = fopen("xxx.yuv","rb+");
+    //"rb+"表示读写方式
+    char const*name = [[[NSBundle mainBundle]pathForResource:@"xxx" ofType:@"yuv"] cStringUsingEncoding:NSUTF8StringEncoding];
+    fp = fopen(name,"rb+");
+    if(!fp)return;
     //创建显示矩形(决定图形显示在widow的什么位置上(rect小于window大小的话,周围为黑边))
     SDL_Rect sdlRect;
     //创建线程
@@ -83,7 +86,6 @@ int refresh_video(void *opaque){
         //buffer 存储读取的数据
         //YUV:Y数据的量为宽*高  UV:宽*0.5 高*0.5
         //总数据为1+1/4+1/4 = 1.5
-        if(!fp)return;
         SDL_WaitEvent(&event);
         if(event.type == REFRESH_EVENT){//刷新事件
             if(fread(buffer, 1, pixel_w*pixel_h*bpp/8 , fp)!= pixel_w*pixel_h*bpp/8){
@@ -108,6 +110,9 @@ int refresh_video(void *opaque){
             SDL_GetWindowSize(window, &screenw, &screenh);
         }else if (event.type == SDL_QUIT){
             thread_exit = 1;
+            //关闭
+//            fclose(fp);
+//            fp = NULL;
         }
     }
     SDL_Quit();
