@@ -113,7 +113,7 @@ int OpenInput(char *_Nullable url){
  */
 int openOutPut(char *outputUrl){
     //"mpegts"->输出格式 为ts
-    int ret = avformat_alloc_output_context2(&controller->_outputContext, NULL, "mpegts", outputUrl);
+    int ret = avformat_alloc_output_context2(&controller->_outputContext, NULL, "mpegts", outputUrl);//输出
     if (ret <0) {
         coustom_error_log("open Output file is Out");
         goto ERROR;
